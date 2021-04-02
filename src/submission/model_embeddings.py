@@ -71,7 +71,7 @@ class ModelEmbeddings(nn.Module):
         
         X_word_emb_list = []
         # divide input into sentence_length batchs
-        for X_padded in input:
+        for X_padded in input_tensor:
             X_emb = self.char_embedding(X_padded)
             X_reshaped = torch.transpose(X_emb, dim0=-1, dim1=-2)
             # conv1d can only take 3-dim mat as input

@@ -11,6 +11,7 @@ Michael Hahn <mhahn2@stanford.edu>
 """
 
 import torch.nn as nn
+import torch
 
 # Do not change these imports; your module names should be
 #   `CNN` in the file `cnn.py`
@@ -81,6 +82,7 @@ class ModelEmbeddings(nn.Module):
             X_highway = self.highway(X_conv_out)
             X_word_emb = self.dropout(X_highway)
             X_word_emb_list.append(X_word_emb)
+            
 
         X_word_emb = torch.stack(X_word_emb_list)
         return X_word_emb

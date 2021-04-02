@@ -22,7 +22,7 @@ class CharDecoder(nn.Module):
         self.charDecoder = nn.LSTM(char_embedding_size, hidden_size)
         self.char_output_projection = nn.Linear(hidden_size, len(self.target_vocab.char2id))
         self.decoderCharEmb = nn.Embedding(len(self.target_vocab.char2id), char_embedding_size,
-                                           padding_idx=self.target_vocab.char_pad)
+                                           padding_idx=self.target_vocab.char2id['<pad>'])
 
     def forward(self, input, dec_hidden=None):
         """ Forward pass of character decoder.
@@ -68,8 +68,8 @@ class CharDecoder(nn.Module):
             reduction="sum",
             ignore_index=self.target_vocab.char2id['<pad>']
         )
-        s_t = s_t.view(-1, s_t.shape[-1])
-        X_target = X_target.view(-1)
+        s_t = s_t.reshape(-1, s_t.shape[-1])
+        X_target = X_target.reshape(-1)
 
         loss = CrossEntropy(s_t, X_target)
         return loss
